@@ -1,0 +1,4 @@
+robotframework>=6
+robotframework-lsp>=1.11.0
+robotframework-stacktrace>=0.4.1
+robotframework-tidy>=4.4.0
