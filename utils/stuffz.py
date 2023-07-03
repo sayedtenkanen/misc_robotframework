@@ -22,7 +22,7 @@ def call_function_in_module_with_class() -> None:
 
 
 @keyword(
-    name="Keyword With Integer Value ${int_value:\d+} Float Value ${float_value:\d*\.\d+|\d+} And String ${string_value}"  # noqa: E501
+    name="Keyword With Integer Value ${int_value:\\d+} Float Value ${float_value:\\d*\\.\\d+|\\d+} And String ${string_value}"  # noqa: E501 pylint: disable=C0301
 )
 def keyword_int_value_float_string(
     int_value: int, float_value: float, string_value: str
@@ -39,6 +39,7 @@ def keyword_int_value_float_string(
 
 @keyword
 def call_serialization_function(path: Path | str) -> dict:
+    """Convert Robot testsuite to Python dictionary"""
     suite: TestSuite = TestSuite.from_file_system(path)
     suite_data: dict[str, Any] = suite.to_dict()
     logger.info(f"Serialized testsuite \n{suite_data= }")
@@ -47,6 +48,7 @@ def call_serialization_function(path: Path | str) -> dict:
 
 @keyword
 def call_deserialization_function(path: dict) -> TestSuite:
+    """Create testsuite from a given Python dictionary that was created from Robot testsuite"""
     suite: TestSuite = TestSuite.from_dict(path)
     return suite
 
