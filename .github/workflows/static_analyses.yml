@@ -25,4 +25,4 @@ jobs:
         pylint $(git ls-files '*.py')
     - name: Analysing the code with robocop
       run: |
-        robocop -A ../../.robocop -r all $(git ls-files '*.robot')
+        robocop -A ./.robocop -r all $(git ls-files '*.robot')
