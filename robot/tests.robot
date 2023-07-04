@@ -4,7 +4,7 @@ Documentation       Different RF features tested in this test suite
 ...
 ...                 Run the tests with:
 ...
-...                ``robot -d results -L TRACE --listener RobotStackTracer -v name:value:with:colons -v another:value <path/to/>tests.robot``
+...                ``robot -d results -L TRACE --listener RobotStackTracer -v name:value:with:colons -v another:value <path/to/>tests.robot``    # robocop:disable=0508
 
 Library             DateTime
 Library             ../utils/stuffz.py    # Import module
@@ -12,7 +12,7 @@ Library             stuffz.ConversionLibrary    # Import class from the module
 
 
 *** Variables ***
-${Name}         ${None}
+${NAME}         ${None}
 ${ANOTHER}      ${None}
 
 
@@ -20,10 +20,10 @@ ${ANOTHER}      ${None}
 Testcase Number One
     [Documentation]    Execute this test case with giving variables As
     ...    *-v* commandline_passed_name:value:with:colons *-v* commandline_passedanother:value
-    Log    ${Name}
+    Log    ${NAME}
     Log    ${ANOTHER}
     stuffz.Call Independent Function From Module With Class
-    Keyword With Integer Value 75 Float Value 4.563 And String here's a string
+    Keyword With Integer Value 75 Float Value 4.563 And String here's a string    # robocop:disable=0302
 
 Example Date Conversions
     [Documentation]    This shows the library import and custom argument conversions
@@ -46,7 +46,7 @@ Match Numbers And Characters From Set
 Match Either Date Or Today
     [Documentation]    [Documentation]    Using custom regular expressions for DateTime
     Deadline Is 2023-09-21
-    Deadline Is today
+    Deadline Is today    # robocop:disable=0302
     Deadline Is Today
 
 Testcase Documentation With Spaces
@@ -112,6 +112,7 @@ ${string1:\D+} ${operator:[+-/*]} ${string2:\D+} = ${expected:\D+}
     END
 
 Deadline Is ${date:(\d{4}-\d{2}-\d{2}|[tT]oday)}
+    [Documentation]    Use regular expression to calculate date
     Log    ${date}
     IF    '${date.lower()}' == 'today'
         ${date} =    Get Current Date
@@ -121,6 +122,7 @@ Deadline Is ${date:(\d{4}-\d{2}-\d{2}|[tT]oday)}
     Log    Deadline is on ${date}
 
 Keyword With ${embedded_argument} As Well As Regulars
+    [Documentation]    Use both embedded and normal arguments
     [Arguments]    ${regular1}    ${regular2}
     Log    The value of the embedded_argument: ${embedded_argument}
     Log Many    Values of the regulars    ${regular1}    ${regular2}
@@ -136,12 +138,13 @@ Item Assignment To List
 
 Item Assignment To Dictionary
     [Documentation]    Various ways of assigning dictionary items
-    &{DICTIONARY} =    Create Dictionary    first_name=unknown
+    ${DICTIONARY} =    Create Dictionary    first_name=unknown
     ${DICTIONARY}[first_name] =    Set Variable    John
     ${DICTIONARY}[last_name] =    Set Variable    Doe
     Should Be Equal As Strings    ${DICTIONARY}    {'first_name': 'John', 'last_name': 'Doe'}
     Set Suite Variable    &{DICTIONARY}
 
+# robocop: disable=0503
 Different Ways Of Assigning Values With Flattened Keywords
     [Documentation]    Tryout different ways of assigning values to list and dictionary and flatten keywords
     [Tags]    robot:flatten
